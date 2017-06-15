@@ -17,8 +17,6 @@ import butterknife.OnClick;
 import com.example.emily.triptalk.LoginActivity.LoginActivity;
 import com.example.emily.triptalk.R;
 
-import static android.R.attr.value;
-
 /**
  * Created by emily on 15.06.2017.
  */
@@ -52,22 +50,32 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    public boolean isEmailValidation(String value)
+    {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches();
+    }
+
+    public boolean checkIsEmpty(String value)
+    {
+        return value.isEmpty();
+    }
+
     @OnClick(R.id.buttonRegisterOk)
     public void onRegisterOkClick(View view) {
-        if(firstName.getText().toString().isEmpty()) {
-            firstName.setError("Error first name");
+        if (checkIsEmpty(firstName.getText().toString())) {
+            firstName.setError("First name error");
             return;
         }
-        if(lastName.getText().toString().isEmpty()) {
-            lastName.setError("Error last name");
+        if (checkIsEmpty(lastName.getText().toString())) {
+            lastName.setError("Last name error");
             return;
         }
-        if(password.getText().toString().isEmpty()) {
-            password.setError("Error password");
+        if (checkIsEmpty(password.getText().toString())) {
+            password.setError("Password error");
             return;
         }
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-            if (!(mSettings.contains(email.getText().toString()) || email.getText().toString().isEmpty())) {
+        if (isEmailValidation(email.getText().toString())) {
+            if (!mSettings.contains(email.getText().toString())) {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(email.getText().toString(), password.getText().toString());
                 editor.apply();
@@ -78,10 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
                 RegisterActivity.this.startActivity(myIntent);
             } else {
-                email.setError("Error email");
+                email.setError("Email error");
             }
         } else {
-            email.setError("Email valid error");
+            email.setError("Email validation error");
         }
     }
 }

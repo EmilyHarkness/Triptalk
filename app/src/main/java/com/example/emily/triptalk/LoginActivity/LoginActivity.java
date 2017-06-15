@@ -29,8 +29,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     SharedPreferences mSettings;
 
-    @Nullable String extraEmail;
-    @Nullable String extraPassword;
+    @Nullable
+    String extraEmail;
+    @Nullable
+    String extraPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         extraEmail = intent.getStringExtra("email");
         extraPassword = intent.getStringExtra("password");
-        if(extraEmail != null && extraPassword != null) {
+        if (extraEmail != null && extraPassword != null) {
             email.setText(extraEmail);
             password.setText(extraPassword);
         }
@@ -56,17 +59,25 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public boolean checkIsEmpty(String value) {
+        return value.isEmpty();
+    }
+
+    public boolean containsUsers(String email, String password) {
+        return mSettings.getString(email, "").equals(password);
+    }
+
     @OnClick(R.id.buttonLoginOk)
     public void onLoginOkClick(View view) {
-        if(password.getText().toString().isEmpty()) {
-            password.setError("Error password");
+        if (checkIsEmpty(password.getText().toString())) {
+            password.setError("Password error");
             return;
         }
-        if (mSettings.getString(email.getText().toString(),"").equals(password.getText().toString())) {
+        if (containsUsers(email.getText().toString(), password.getText().toString())) {
             Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            email.setError("Error");
+            email.setError("Email error or incorrect password");
         }
     }
 }
