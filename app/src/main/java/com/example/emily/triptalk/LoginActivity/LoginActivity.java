@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,18 +23,27 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    @BindView(R.id.editTextEmail)
+    @BindView(R.id.editTextEmailLogin)
     EditText email;
-    @BindView(R.id.editTextPassword)
+    @BindView(R.id.editTextPasswordLogin)
     EditText password;
     SharedPreferences mSettings;
 
+    @Nullable String extraEmail;
+    @Nullable String extraPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mSettings = getSharedPreferences("users", MODE_PRIVATE);
+        Intent intent = getIntent();
+        extraEmail = intent.getStringExtra("email");
+        extraPassword = intent.getStringExtra("password");
+        if(extraEmail != null && extraPassword != null) {
+            email.setText(extraEmail);
+            password.setText(extraPassword);
+        }
     }
 
     @OnClick(R.id.textViewLink)

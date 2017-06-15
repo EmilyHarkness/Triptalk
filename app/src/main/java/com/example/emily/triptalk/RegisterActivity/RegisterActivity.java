@@ -14,7 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.example.emily.triptalk.LoginActivity.LoginActivity;
 import com.example.emily.triptalk.R;
+
+import static android.R.attr.value;
 
 /**
  * Created by emily on 15.06.2017.
@@ -69,7 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
                 editor.putString(email.getText().toString(), password.getText().toString());
                 editor.apply();
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                myIntent.putExtra("email", email.getText().toString());
+                myIntent.putExtra("password", password.getText().toString());
                 finish();
+                RegisterActivity.this.startActivity(myIntent);
             } else {
                 email.setError("Error email");
             }
