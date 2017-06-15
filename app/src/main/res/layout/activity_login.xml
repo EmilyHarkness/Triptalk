@@ -79,7 +79,6 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-
                 android:background="@android:color/white"
                 android:text="" />
         </LinearLayout>
@@ -91,7 +90,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
@@ -104,7 +103,7 @@
             android:drawableRight="@drawable/password"
             android:drawableTint="@android:color/white"
             android:ems="10"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />

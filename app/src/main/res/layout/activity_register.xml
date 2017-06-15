@@ -108,7 +108,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/white"
                 android:ems="10"
-                android:hint="first name"
+                android:nextFocusDown="@+id/editTextLastName"
+                android:hint="@string/first_name"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
@@ -121,7 +122,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/white"
                 android:ems="10"
-                android:hint="last name"
+                android:hint="@string/last_name"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
@@ -134,7 +135,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@android:color/white"
             android:ems="10"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
@@ -147,7 +148,7 @@
             android:drawableRight="@drawable/password"
             android:drawableTint="@android:color/white"
             android:ems="10"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />

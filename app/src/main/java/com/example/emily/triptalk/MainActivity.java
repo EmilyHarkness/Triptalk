@@ -9,30 +9,24 @@ import android.widget.Button;
 import com.example.emily.triptalk.LoginActivity.LoginActivity;
 import com.example.emily.triptalk.RegisterActivity.RegisterActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    Button btnRegister;
-    Button btnLogin;
-
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnRegister = (Button) findViewById(R.id.buttonRegister);
-        btnRegister.setOnClickListener(this);
-        btnLogin = (Button) findViewById(R.id.buttonLogin);
-        btnLogin.setOnClickListener(this);
+        ButterKnife.bind(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.buttonRegister:
-                startActivity(new Intent(this, RegisterActivity.class));
-                break;
-            case R.id.buttonLogin:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-        }
+    @OnClick(R.id.buttonRegister)
+    public void onRegisterOkClick(View view) {
+        startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    @OnClick(R.id.buttonLogin)
+    public void onLiginClick(View view) {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
