@@ -9,8 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:tint="@color/colorBlackBackground"
-        android:src="@drawable/background" />
+        android:src="@drawable/background"
+        android:tint="@color/colorBlackBackground" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@android:drawable/ic_menu_revert"
+        android:backgroundTint="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +25,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +39,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonSingInFacebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -84,8 +91,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            android:tint="@android:color/white"
-            android:src="@drawable/addphoto" />
+            android:src="@drawable/addphoto"
+            android:tint="@android:color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,7 +153,7 @@
             android:textColorHint="@android:color/white" />
 
         <Button
-            android:id="@+id/buttonRegister"
+            android:id="@+id/buttonRegisterOk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -165,7 +172,6 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:gravity="center"
-            android:onClick="onTermsClick"
             android:text="Terms &amp; Condition"
             android:textColor="@android:color/white" />
     </LinearLayout>

@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.example.emily.triptalk.LoginActivity.LoginActivity;
+import com.example.emily.triptalk.MainActivity;
 import com.example.emily.triptalk.R;
 
 /**
@@ -25,10 +25,16 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.textViewLink)
     public void onTermsClick(View view) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com")));
+    }
+
+    @OnClick(R.id.buttonBack)
+    public void onBackClick(View view) {
+        finish();
     }
 }

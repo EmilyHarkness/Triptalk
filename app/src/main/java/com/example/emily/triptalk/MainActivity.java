@@ -13,13 +13,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button btnRegister;
     Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnRegister = (Button)findViewById(R.id.buttonRegister);
+        btnRegister = (Button) findViewById(R.id.buttonRegister);
         btnRegister.setOnClickListener(this);
-        btnLogin = (Button)findViewById(R.id.buttonLogin);
+        btnLogin = (Button) findViewById(R.id.buttonLogin);
         btnLogin.setOnClickListener(this);
     }
 
