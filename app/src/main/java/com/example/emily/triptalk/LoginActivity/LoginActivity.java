@@ -48,11 +48,15 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonLoginOk)
     public void onLoginOkClick(View view) {
+        if(password.getText().toString().isEmpty()) {
+            password.setError("Error password");
+            return;
+        }
         if (mSettings.getString(email.getText().toString(),"").equals(password.getText().toString())) {
             Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            email.setError("Error");
         }
     }
 }
