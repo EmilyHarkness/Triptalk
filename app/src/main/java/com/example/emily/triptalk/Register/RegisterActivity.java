@@ -1,4 +1,4 @@
-package com.example.emily.triptalk.RegisterActivity;
+package com.example.emily.triptalk.Register;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import com.example.emily.triptalk.LoginActivity.LoginActivity;
+import com.example.emily.triptalk.Login.LoginActivity;
 import com.example.emily.triptalk.R;
 
 /**
@@ -50,46 +50,54 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    public boolean isEmailValidation(String value)
-    {
+    public boolean checkIsEmpty(String value) {
+        return value.isEmpty();
+    }
+
+    public boolean isEmailValidation(String value) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches();
     }
 
-    public boolean checkIsEmpty(String value)
-    {
-        return value.isEmpty();
+    public boolean containsUsers(String value) {
+        return mSettings.contains(value);
     }
 
     @OnClick(R.id.buttonRegisterOk)
     public void onRegisterOkClick(View view) {
+        boolean reg = true;
+        boolean tr = true;
         if (checkIsEmpty(firstName.getText().toString())) {
             firstName.setError("First name error");
-            return;
+            reg = false;
         }
         if (checkIsEmpty(lastName.getText().toString())) {
             lastName.setError("Last name error");
-            return;
+            reg = false;
         }
         if (checkIsEmpty(password.getText().toString())) {
             password.setError("Password error");
-            return;
+            reg = false;
         }
         if (isEmailValidation(email.getText().toString())) {
-            if (!mSettings.contains(email.getText().toString())) {
-                SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(email.getText().toString(), password.getText().toString());
-                editor.apply();
-                Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                myIntent.putExtra("email", email.getText().toString());
-                myIntent.putExtra("password", password.getText().toString());
-                finish();
-                RegisterActivity.this.startActivity(myIntent);
+            if (!containsUsers(email.getText().toString())) {
+                if (reg == tr) {
+                    SharedPreferences.Editor editor = mSettings.edit();
+                    editor.putString(email.getText().toString(), password.getText().toString());
+                    editor.apply();
+                    Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
+                    Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    myIntent.putExtra("email", email.getText().toString());
+                    myIntent.putExtra("password", password.getText().toString());
+                    finish();
+                    RegisterActivity.this.startActivity(myIntent);
+                }
             } else {
-                email.setError("Email error");
+                email.setError("This email is already registered");
+                reg = false;
             }
         } else {
             email.setError("Email validation error");
+            reg = false;
         }
     }
 }

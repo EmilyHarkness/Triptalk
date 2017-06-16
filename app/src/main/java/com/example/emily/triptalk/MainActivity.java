@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-import com.example.emily.triptalk.LoginActivity.LoginActivity;
-import com.example.emily.triptalk.RegisterActivity.RegisterActivity;
+import com.example.emily.triptalk.Login.LoginActivity;
+import com.example.emily.triptalk.Register.RegisterActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

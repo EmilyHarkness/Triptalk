@@ -1,4 +1,4 @@
-package com.example.emily.triptalk.LoginActivity;
+package com.example.emily.triptalk.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.emily.triptalk.MainActivity;
 import com.example.emily.triptalk.R;
 
 import butterknife.BindView;
@@ -63,21 +61,32 @@ public class LoginActivity extends AppCompatActivity {
         return value.isEmpty();
     }
 
+    public boolean isEmailValidation(String value) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches();
+    }
+
     public boolean containsUsers(String email, String password) {
         return mSettings.getString(email, "").equals(password);
     }
 
     @OnClick(R.id.buttonLoginOk)
     public void onLoginOkClick(View view) {
+        boolean log = true;
         if (checkIsEmpty(password.getText().toString())) {
             password.setError("Password error");
-            return;
+            log = false;
         }
-        if (containsUsers(email.getText().toString(), password.getText().toString())) {
-            Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
-            finish();
+        if (isEmailValidation(email.getText().toString())) {
+            if (containsUsers(email.getText().toString(), password.getText().toString()) && log == true) {
+                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                email.setError("Email error or incorrect password");
+                log = false;
+            }
         } else {
-            email.setError("Email error or incorrect password");
+            email.setError("Email validation error");
+            log = false;
         }
     }
 }

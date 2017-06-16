@@ -4,4 +4,13 @@
     <string name="last_name">last name</string>
     <string name="password">password</string>
     <string name="email">email</string>
+    <string name="hi">Hi! Sing in now!</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="sing_in_with_facebook">sing in with Facebook</string>
+    <string name="connect_with_facebook">connect with Facebook</string>
+    <string name="register">register</string>
+    <string name="login">login</string>
+    <string name="terms">Terms &amp; Condition</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="or">or</string>
 </resources>
