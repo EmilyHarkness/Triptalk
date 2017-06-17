@@ -22,6 +22,7 @@ import com.example.emily.triptalk.R;
  */
 
 public class RegisterActivity extends AppCompatActivity {
+    boolean tr = true;
     @BindView(R.id.editTextEmail)
     EditText email;
     @BindView(R.id.editTextPassword)
@@ -65,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
     @OnClick(R.id.buttonRegisterOk)
     public void onRegisterOkClick(View view) {
         boolean reg = true;
-        boolean tr = true;
         if (checkIsEmpty(firstName.getText().toString())) {
             firstName.setError("First name error");
             reg = false;
