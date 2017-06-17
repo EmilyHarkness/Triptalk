@@ -17,7 +17,7 @@
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_margin="4dp"
-        android:background="@drawable/back"/>
+        android:background="@drawable/back" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,56 +102,37 @@
 
             <EditText
                 android:id="@+id/editTextFirstName"
+                style="@style/EditTextStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/white"
-                android:ems="10"
-                android:nextFocusDown="@+id/editTextLastName"
                 android:hint="@string/first_name"
                 android:inputType="textPersonName"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:nextFocusDown="@+id/editTextLastName" />
 
             <EditText
                 android:id="@+id/editTextLastName"
+                style="@style/EditTextStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/white"
-                android:ems="10"
                 android:hint="@string/last_name"
-                android:inputType="textPersonName"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <EditText
             android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/EditTextStyle"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/white"
-            android:ems="10"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
+            style="@style/EditTextStyle"
             android:drawableRight="@drawable/password"
-            android:drawableTint="@android:color/white"
-            android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/buttonRegisterOk"

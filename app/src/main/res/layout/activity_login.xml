@@ -85,28 +85,18 @@
 
         <EditText
             android:id="@+id/editTextEmailLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/EditTextStyle"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/white"
-            android:ems="10"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/editTextPasswordLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
+            style="@style/EditTextStyle"
             android:drawableRight="@drawable/password"
             android:drawableTint="@android:color/white"
-            android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/buttonLoginOk"
