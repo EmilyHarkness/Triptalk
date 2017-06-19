@@ -2,15 +2,19 @@ package com.example.emily.triptalk.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +29,13 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    boolean tr = true;
+    boolean tr = true, showPassword = false;
     @BindView(R.id.editTextEmailLogin)
     EditText email;
     @BindView(R.id.editTextPasswordLogin)
     EditText password;
+    @BindView(R.id.imageButtonPasswordLogin)
+    ImageButton btnPassword;
     SharedPreferences mSettings;
 
     @Nullable
@@ -50,22 +56,6 @@ public class LoginActivity extends AppCompatActivity {
             email.setText(extraEmail);
             password.setText(extraPassword);
         }
-
-        /*password.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (password.getImeActionId() == EditorInfo.IME_ACTION_DONE)
-                    onLoginOkClick(null);
-            }
-        });*/
     }
 
     @OnClick(R.id.textViewLink)
@@ -76,6 +66,19 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.buttonBack)
     public void onBackClick(View view) {
         finish();
+    }
+
+    @OnClick(R.id.imageButtonPasswordLogin)
+    public void onPasswordLoginClick(View view) {
+        if (showPassword) {
+            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            btnPassword.setActivated(false);
+            showPassword = false;
+        } else {
+            password.setInputType(InputType.TYPE_CLASS_TEXT);
+            btnPassword.setActivated(true);
+            showPassword = true;
+        }
     }
 
     public boolean checkIsEmpty(String value) {

@@ -6,13 +6,18 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 
 import com.example.emily.triptalk.Login.LoginActivity;
 import com.example.emily.triptalk.R;
@@ -22,7 +27,7 @@ import com.example.emily.triptalk.R;
  */
 
 public class RegisterActivity extends AppCompatActivity {
-    boolean tr = true;
+    boolean tr = true, showPassword = false;
     @BindView(R.id.editTextEmail)
     EditText email;
     @BindView(R.id.editTextPassword)
@@ -31,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText firstName;
     @BindView(R.id.editTextLastName)
     EditText lastName;
+    @BindView(R.id.imageButtonPassword)
+    ImageButton btnPassword;
     SharedPreferences mSettings;
 
     @Override
@@ -49,6 +56,19 @@ public class RegisterActivity extends AppCompatActivity {
     @OnClick(R.id.buttonBack)
     public void onBackClick(View view) {
         finish();
+    }
+
+    @OnClick(R.id.imageButtonPassword)
+    public void onPasswordClick(View view) {
+        if (showPassword) {
+            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            btnPassword.setActivated(false);
+            showPassword = false;
+        } else {
+            password.setInputType(InputType.TYPE_CLASS_TEXT);
+            btnPassword.setActivated(true);
+            showPassword = true;
+        }
     }
 
     public boolean checkIsEmpty(String value) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -127,12 +128,28 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/editTextPassword"
-            style="@style/EditTextStyle"
-            android:drawableRight="@drawable/password"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                style="@style/EditTextStyle"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <ImageButton
+                android:id="@+id/imageButtonPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorBackground"
+                android:tint="@android:color/white"
+                app:srcCompat="@drawable/password_image_states" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/buttonRegisterOk"
