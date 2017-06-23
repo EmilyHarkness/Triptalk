@@ -2,21 +2,14 @@ package com.example.emily.triptalk.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.emily.triptalk.R;
 
@@ -29,7 +22,7 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    boolean tr = true, showPassword = false;
+    boolean showPassword = false;
     @BindView(R.id.editTextEmailLogin)
     EditText email;
     @BindView(R.id.editTextPasswordLogin)
@@ -101,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
             log = false;
         }
         if (isEmailValidation(email.getText().toString())) {
-            if (containsUsers(email.getText().toString(), password.getText().toString()) && log == tr) {
-                Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+            if (containsUsers(email.getText().toString(), password.getText().toString()) && log) {
+                startActivity(new Intent(this, UsersListFragment.class));
                 finish();
             } else {
                 email.setError("Email error or incorrect password");

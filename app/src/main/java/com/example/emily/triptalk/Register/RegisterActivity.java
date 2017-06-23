@@ -27,7 +27,7 @@ import com.example.emily.triptalk.R;
  */
 
 public class RegisterActivity extends AppCompatActivity {
-    boolean tr = true, showPassword = false;
+    boolean showPassword = false;
     @BindView(R.id.editTextEmail)
     EditText email;
     @BindView(R.id.editTextPassword)
@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if (isEmailValidation(email.getText().toString())) {
             if (!containsUsers(email.getText().toString())) {
-                if (reg == tr) {
+                if (reg) {
                     SharedPreferences.Editor editor = mSettings.edit();
                     editor.putString(email.getText().toString(), password.getText().toString());
                     editor.apply();
