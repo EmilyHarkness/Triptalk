@@ -13,4 +13,12 @@
     <string name="terms">Terms &amp; Condition</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="or">or</string>
+
+    <string name="followers">Followers:</string>
+    <string name="following">Following:</string>
+    <string name="name">Name:</string>
+    <string name="location">Location:</string>
+    <string name="company">Company:</string>
+    <string name="repositories">Repositories:</string>
+    <string name="open_in_browser">Open in Browser</string>
 </resources>

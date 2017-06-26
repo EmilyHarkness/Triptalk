@@ -1,11 +1,18 @@
 package com.example.emily.triptalk.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.emily.triptalk.GitHubService;
 import com.example.emily.triptalk.R;
@@ -16,36 +23,36 @@ import com.example.emily.triptalk.UserDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 /**
  * Created by emily on 22.06.2017.
  */
 
-public class UsersListFragment extends AppCompatActivity {
+public class UsersListFragment extends Fragment {
     List<User> users = new ArrayList<User>();
     UserAdapter userAdapter;
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.users_list, null);
-    }*/
+    ProgressBar progressBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.users_list);
-        ButterKnife.bind(this);
-        userAdapter = new UserAdapter(this, new ArrayList<User>());
-        ListView listView = (ListView) findViewById(R.id.usersList);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.users_list, null);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+
+        userAdapter = new UserAdapter(getActivity(), new ArrayList<User>());
+        ListView listView = (ListView) view.findViewById(R.id.usersList);
         listView.setAdapter(userAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
+                intent.putExtra("login", users.get(position).getLogin());
+                startActivity(intent);
+            }
+        });
 
         GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
         Call<List<User>> call = gitHubService.getUsers();
@@ -60,32 +67,15 @@ public class UsersListFragment extends AppCompatActivity {
                 } else {
                     //bad request
                 }
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                //no network
+                //No network
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
             }
         });
+        return view;
     }
-
-    @OnItemClick(R.id.usersList)
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, UserDetailsActivity.class);
-        intent.putExtra("login", users.get(position).getLogin());
-        startActivity(intent);
-    }
-
-/*
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView login;
-        public TextView url;
-
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item, parent, false));
-            //avatar = (ImageView) itemView.findViewById(R.id.image);
-            login = (TextView) itemView.findViewById(R.id.login_text_view);
-        }
-    }
-*/
 }

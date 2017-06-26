@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (isEmailValidation(email.getText().toString())) {
             if (containsUsers(email.getText().toString(), password.getText().toString()) && log) {
-                startActivity(new Intent(this, UsersListFragment.class));
+                startActivity(new Intent(this, UsersActivity.class));
                 finish();
             } else {
                 email.setError("Email error or incorrect password");

@@ -34,17 +34,17 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         ButterKnife.bind(this);
-        /*setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         setupViewPager(viewPager);
-        tabs.setupWithViewPager(viewPager);*/
+        tabs.setupWithViewPager(viewPager);
     }
 
-/*    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new UsersListFragment(), "ListView");
         adapter.addFragment(new UsersRecyclerFragment(), "RecyclerView");
         viewPager.setAdapter(adapter);
-    }*/
+    }
 
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

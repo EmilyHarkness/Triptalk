@@ -11,19 +11,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register.RegisterActivity"/>
-        <activity android:name=".Login.LoginActivity"/>
-        <activity android:name=".Login.UsersActivity"/>
-        <activity android:name=".Login.UsersRecyclerFragment"/>
-        <activity android:name=".Login.UsersListFragment"/>
-        <activity android:name=".Login.UserDetailsActivity"/>
+        <activity
+            android:name=".Register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.UsersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.UserDetailsActivity"
+            android:screenOrientation="portrait">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="github.com"
+                    android:scheme="http" />
+                <data
+                    android:host="github.com"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
