@@ -1,5 +1,9 @@
 package com.example.emily.triptalk.Login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,7 +12,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.emily.triptalk.MainActivity;
 import com.example.emily.triptalk.R;
 
 import java.util.ArrayList;
@@ -34,6 +41,7 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         setupViewPager(viewPager);
         tabs.setupWithViewPager(viewPager);

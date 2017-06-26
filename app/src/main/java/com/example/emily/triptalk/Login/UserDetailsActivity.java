@@ -1,7 +1,9 @@
 package com.example.emily.triptalk.Login;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -66,6 +68,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         ButterKnife.bind(this);
+
         progressBar.setVisibility(ProgressBar.VISIBLE);
 
         log = getIntent().getStringExtra("login");
@@ -113,13 +116,13 @@ public class UserDetailsActivity extends AppCompatActivity {
                 } else {
                     //bad request
                 }
-                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                progressBar.setVisibility(ProgressBar.GONE);
             }
 
             @Override
             public void onFailure(Call<UserDetails> call, Throwable t) {
                 //no network
-                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                progressBar.setVisibility(ProgressBar.GONE);
             }
         });
     }

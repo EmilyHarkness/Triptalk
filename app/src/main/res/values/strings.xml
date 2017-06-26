@@ -21,4 +21,7 @@
     <string name="company">Company:</string>
     <string name="repositories">Repositories:</string>
     <string name="open_in_browser">Open in Browser</string>
+
+    <string name="headset_unplugged">Headset unplugged</string>
+    <string name="headset_plugged">Headset plugged</string>
 </resources>
