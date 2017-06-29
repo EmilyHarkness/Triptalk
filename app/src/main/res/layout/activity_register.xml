@@ -135,6 +135,7 @@
             <EditText
                 android:id="@+id/editTextPassword"
                 style="@style/EditTextStyle"
+                android:layout_marginRight="32dp"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.buttonLogin)
-    public void onLiginClick(View view) {
+    public void onLoginClick(View view) {
         startActivity(new Intent(this, LoginActivity.class));
     }
 

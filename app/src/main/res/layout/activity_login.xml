@@ -87,7 +87,8 @@
             style="@style/EditTextStyle"
             android:layout_marginTop="16dp"
             android:hint="@string/email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="o@o.o" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -98,8 +99,10 @@
             <EditText
                 android:id="@+id/editTextPasswordLogin"
                 style="@style/EditTextStyle"
+                android:layout_marginRight="32dp"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="1" />
 
             <ImageButton
                 android:id="@+id/imageButtonPasswordLogin"

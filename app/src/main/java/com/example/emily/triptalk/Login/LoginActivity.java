@@ -1,22 +1,16 @@
 package com.example.emily.triptalk.Login;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.emily.triptalk.MainActivity;
 import com.example.emily.triptalk.R;
 
 import butterknife.BindView;
@@ -35,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     @BindView(R.id.imageButtonPasswordLogin)
     ImageButton btnPassword;
-    SharedPreferences mSettings;
+    SharedPreferences mUsers;
 
     @Nullable
     String extraEmail;
@@ -48,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        mSettings = getSharedPreferences("users", MODE_PRIVATE);
+        mUsers = getSharedPreferences("users", MODE_PRIVATE);
         Intent intent = getIntent();
         extraEmail = intent.getStringExtra("email");
         extraPassword = intent.getStringExtra("password");
@@ -90,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean containsUsers(String email, String password) {
-        return mSettings.getString(email, "").equals(password);
+        return mUsers.getString(email, "").equals(password);
     }
 
     @OnClick(R.id.buttonLoginOk)

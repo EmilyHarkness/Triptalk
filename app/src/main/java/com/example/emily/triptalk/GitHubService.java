@@ -7,6 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by emily on 23.06.2017.
@@ -14,6 +15,8 @@ import retrofit2.http.Path;
 public interface GitHubService {
     @GET("users")
     Call<List<User>> getUsers();
+    @GET("users")
+    Call<List<User>> getMoreUsers(@Query("since") int position);
     @GET("users/{user}")
     Call<UserDetails> getUserDetails(@Path("user") String user);
 

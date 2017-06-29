@@ -24,4 +24,11 @@
 
     <string name="headset_unplugged">Headset unplugged</string>
     <string name="headset_plugged">Headset plugged</string>
+
+    <string name="sort">Sort: </string>
+    <string-array name="sort_types">
+        <item>Without</item>
+        <item>A-Z</item>
+        <item>Z-A</item>
+    </string-array>
 </resources>

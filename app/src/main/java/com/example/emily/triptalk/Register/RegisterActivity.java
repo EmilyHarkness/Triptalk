@@ -1,26 +1,20 @@
 package com.example.emily.triptalk.Register;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 import com.example.emily.triptalk.Login.LoginActivity;
 import com.example.emily.triptalk.R;
@@ -41,14 +35,14 @@ public class RegisterActivity extends AppCompatActivity {
     EditText lastName;
     @BindView(R.id.imageButtonPassword)
     ImageButton btnPassword;
-    SharedPreferences mSettings;
+    SharedPreferences mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        mSettings = getSharedPreferences("users", Context.MODE_PRIVATE);
+        mUsers = getSharedPreferences("users", Context.MODE_PRIVATE);
     }
 
     @OnClick(R.id.textViewLink)
@@ -83,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean containsUsers(String value) {
-        return mSettings.contains(value);
+        return mUsers.contains(value);
     }
 
     @OnClick(R.id.buttonRegisterOk)
@@ -104,10 +98,11 @@ public class RegisterActivity extends AppCompatActivity {
         if (isEmailValidation(email.getText().toString())) {
             if (!containsUsers(email.getText().toString())) {
                 if (reg) {
-                    SharedPreferences.Editor editor = mSettings.edit();
+                    SharedPreferences.Editor editor = mUsers.edit();
                     editor.putString(email.getText().toString(), password.getText().toString());
                     editor.apply();
                     Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
+
                     Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                     myIntent.putExtra("email", email.getText().toString());
                     myIntent.putExtra("password", password.getText().toString());

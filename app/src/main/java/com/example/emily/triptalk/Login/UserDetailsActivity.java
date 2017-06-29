@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.emily.triptalk.GitHubService;
 import com.example.emily.triptalk.R;
+import com.example.emily.triptalk.Register.RegisterActivity;
 import com.example.emily.triptalk.User;
 import com.example.emily.triptalk.UserAdapter;
 import com.example.emily.triptalk.UserDetails;
@@ -130,6 +132,13 @@ public class UserDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.buttonOpen)
     public void onOpenClick(View view) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(userDetails.getHtmlUrl())));
-        Context context = getApplicationContext();
+    }
+
+    @OnClick(R.id.avatar)
+    public void onAvatarClick(View view) {
+        //startActivity(new Intent(this, FullScreenActivity.class));
+        Intent intent = new Intent(this, FullScreenActivity.class);
+        intent.putExtra("image", userDetails.getAvatar_url());
+        startActivity(intent);
     }
 }
