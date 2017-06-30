@@ -2,10 +2,11 @@ package com.example.emily.triptalk.Login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,33 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.emily.triptalk.GitHubService;
 import com.example.emily.triptalk.R;
 import com.example.emily.triptalk.RecyclerViewOnItemClickListener;
 import com.example.emily.triptalk.User;
-import com.example.emily.triptalk.UserAdapter;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 /**
  * Created by emily on 22.06.2017.
@@ -50,7 +42,7 @@ public class UsersRecyclerFragment extends Fragment {
     List<User> users = new ArrayList<User>();
     UserRecyclerAdapter userAdapter;
     ProgressBar progressBar;
-    Spinner spinner;
+    Spinner spinnerRecycler;
     SwipeRefreshLayout swipeRefreshLayout;
     int sortType;
 
@@ -59,8 +51,8 @@ public class UsersRecyclerFragment extends Fragment {
         View view = inflater.inflate(R.layout.users_recycler, null);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        spinner = (Spinner) getActivity().findViewById(R.id.spinner);
-        sortType = spinner.getSelectedItemPosition();
+        spinnerRecycler = (Spinner) getActivity().findViewById(R.id.spinnerRecycler);
+        sortType = spinnerRecycler.getSelectedItemPosition();
 
         userAdapter = new UserRecyclerAdapter(getActivity(), new ArrayList<User>(), new RecyclerViewOnItemClickListener() {
             @Override
@@ -115,23 +107,57 @@ public class UsersRecyclerFragment extends Fragment {
             }
         });
 
+        spinnerRecycler.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 1: //A-Z
+                        Collections.sort(users, new Comparator<User>() {
+                            @Override
+                            public int compare(User o1, User o2) {
+                                return o1.getLogin().compareTo(o2.getLogin());
+                            }
+                        });
+                        break;
+                    case 2: //Z-A
+                        Collections.sort(users, new Comparator<User>() {
+                            @Override
+                            public int compare(User o1, User o2) {
+                                return o2.getLogin().compareTo(o1.getLogin());
+                            }
+                        });
+                        break;
+                    default: //without
+                        Collections.sort(users, new Comparator<User>() {
+                            @Override
+                            public int compare(User o1, User o2) {
+                                if (o1.getId() < o2.getId())
+                                    return -1;
+                                else
+                                    return 1;
+                            }
+                        });
+                        break;
+                }
+                sortType = position;
+                userAdapter.users.clear();
+                userAdapter.users.addAll(users);
+                userAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRecycler);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (sortType != 0) {
-                    spinner.setSelection(0);
-                    Collections.sort(users, new Comparator<User>() {
-                        @Override
-                        public int compare(User o1, User o2) {
-                            if (o1.getId() < o2.getId())
-                                return -1;
-                            else
-                                return 1;
-                        }
-                    });
-                    userAdapter.users.clear();
-                    userAdapter.users.addAll(users);
+                    sortType = 0;
+                    spinnerRecycler.setSelection(0);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -160,6 +186,38 @@ public class UsersRecyclerFragment extends Fragment {
                                 if (response.isSuccessful()) { //ok
                                     users.addAll(response.body());
                                     userAdapter.users.addAll(response.body());
+                                    //userAdapter.notifyDataSetChanged();
+                                    switch (sortType) {
+                                        case 1: //A-Z
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    return o1.getLogin().compareTo(o2.getLogin());
+                                                }
+                                            });
+                                            break;
+                                        case 2: //Z-A
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    return o2.getLogin().compareTo(o1.getLogin());
+                                                }
+                                            });
+                                            break;
+                                        default: //without
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    if (o1.getId() < o2.getId())
+                                                        return -1;
+                                                    else
+                                                        return 1;
+                                                }
+                                            });
+                                            break;
+                                    }
+                                    userAdapter.users.clear();
+                                    userAdapter.users.addAll(users);
                                     userAdapter.notifyDataSetChanged();
                                 } else { //bad request
                                 }
@@ -180,7 +238,6 @@ public class UsersRecyclerFragment extends Fragment {
     }
 
     public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.UserViewHolder> {
-
         LayoutInflater layoutInflater;
         List<User> users;
         RecyclerViewOnItemClickListener listener;

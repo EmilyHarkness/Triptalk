@@ -3,6 +3,7 @@ package com.example.emily.triptalk;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,15 +29,15 @@ public class UserAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
+        User currentUser = getItem(position);
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
-        User currentUser = getItem(position);
-
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
         Picasso.with(getContext()).load(currentUser.getAvatar_url()).into(imageView);
         TextView loginTextView = (TextView) listItemView.findViewById(R.id.login_text_view);
         loginTextView.setText(currentUser.getLogin());
+
         return listItemView;
     }
 }

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.emily.triptalk.GitHubService;
 import com.example.emily.triptalk.R;
-import com.example.emily.triptalk.SpinnerOnItemSelectedListener;
 import com.example.emily.triptalk.User;
 import com.example.emily.triptalk.UserAdapter;
-import com.example.emily.triptalk.UserDetails;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -131,6 +126,7 @@ public class UsersListFragment extends Fragment {
                         });
                         break;
                 }
+                sortType = position;
                 userAdapter.clear();
                 userAdapter.addAll(users);
             }
@@ -146,18 +142,8 @@ public class UsersListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 if (sortType != 0) {
+                    sortType = 0;
                     spinner.setSelection(0);
-                    Collections.sort(users, new Comparator<User>() {
-                        @Override
-                        public int compare(User o1, User o2) {
-                            if (o1.getId() < o2.getId())
-                                return -1;
-                            else
-                                return 1;
-                        }
-                    });
-                    userAdapter.clear();
-                    userAdapter.addAll(users);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -166,33 +152,66 @@ public class UsersListFragment extends Fragment {
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1 &&
-                        listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight()) {
-                    progressBar.setVisibility(ProgressBar.VISIBLE);
+                if (users.size() > 0) {
+                    if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1 &&
+                            listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight()) {
+                        progressBar.setVisibility(ProgressBar.VISIBLE);
 
-                    int maxID = 0;
-                    for (int i = 0; i < users.size(); i++) {
-                        if (users.get(i).getId() > maxID)
-                            maxID = users.get(i).getId();
-                    }
-                    GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
-                    Call<List<User>> call = gitHubService.getMoreUsers(maxID);
-                    call.enqueue(new Callback<List<User>>() {
-                        @Override
-                        public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                            if (response.isSuccessful()) {
-                                users.addAll(response.body());
-                                userAdapter.addAll(response.body());
-                            } else {
+                        int maxID = 0;
+                        for (int i = 0; i < users.size(); i++) {
+                            if (users.get(i).getId() > maxID)
+                                maxID = users.get(i).getId();
+                        }
+                        GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
+                        Call<List<User>> call = gitHubService.getMoreUsers(maxID);
+                        call.enqueue(new Callback<List<User>>() {
+                            @Override
+                            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                                if (response.isSuccessful()) {
+                                    users.addAll(response.body());
+                                    userAdapter.addAll(response.body());
+                                    switch (sortType) {
+                                        case 1: //A-Z
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    return o1.getLogin().compareTo(o2.getLogin());
+                                                }
+                                            });
+                                            break;
+                                        case 2: //Z-A
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    return o2.getLogin().compareTo(o1.getLogin());
+                                                }
+                                            });
+                                            break;
+                                        default: //without
+                                            Collections.sort(users, new Comparator<User>() {
+                                                @Override
+                                                public int compare(User o1, User o2) {
+                                                    if (o1.getId() < o2.getId())
+                                                        return -1;
+                                                    else
+                                                        return 1;
+                                                }
+                                            });
+                                            break;
+                                    }
+                                    userAdapter.clear();
+                                    userAdapter.addAll(users);
+                                } else {
+                                }
+                                progressBar.setVisibility(ProgressBar.GONE);
                             }
-                            progressBar.setVisibility(ProgressBar.GONE);
-                        }
 
-                        @Override
-                        public void onFailure(Call<List<User>> call, Throwable t) {
-                            progressBar.setVisibility(ProgressBar.GONE);
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<List<User>> call, Throwable t) {
+                                progressBar.setVisibility(ProgressBar.GONE);
+                            }
+                        });
+                    }
                 }
             }
 

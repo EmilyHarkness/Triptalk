@@ -31,6 +31,8 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnItemSelected;
+import butterknife.OnPageChange;
+import butterknife.OnTouch;
 import retrofit2.Converter;
 
 /**
@@ -46,8 +48,9 @@ public class UsersActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.spinner)
     Spinner spinner;
+    @BindView(R.id.spinnerRecycler)
+    Spinner spinnerRecycler;
     SharedPreferences mSettings;
-    int sortType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +62,40 @@ public class UsersActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabs.setupWithViewPager(viewPager);
 
+        spinner.setVisibility(View.VISIBLE);
+        spinnerRecycler.setVisibility(View.GONE);
+
         mSettings = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        sortType = mSettings.getInt("sortType", -1);
-        if (sortType != -1)
-            spinner.setSelection(sortType);
+        int listSortType = mSettings.getInt("listSortType", -1);
+        if (listSortType != -1)
+            spinner.setSelection(listSortType);
         else
             spinner.setSelection(0);
+
+        int recyclerSortType = mSettings.getInt("recyclerSortType", -1);
+        if (recyclerSortType != -1)
+            spinnerRecycler.setSelection(recyclerSortType);
+        else
+            spinnerRecycler.setSelection(0);
+    }
+
+    @OnPageChange(R.id.viewpager)
+    public void onViewpagerPageChange(int position) {
+        if (position == 0) {
+            spinner.setVisibility(View.VISIBLE);
+            spinnerRecycler.setVisibility(View.GONE);
+        } else {
+            spinnerRecycler.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        sortType = spinner.getSelectedItemPosition();
         SharedPreferences.Editor editor = mSettings.edit();
-        editor.putInt("sortType", sortType);
+        editor.putInt("listSortType", spinner.getSelectedItemPosition());
+        editor.putInt("recyclerSortType", spinnerRecycler.getSelectedItemPosition());
         editor.apply();
     }
 
