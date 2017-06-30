@@ -41,6 +41,7 @@ import retrofit2.Response;
 
 public class UserDetailsActivity extends AppCompatActivity {
     private String log;
+    private String link;
     UserDetails userDetails;
     @BindView(R.id.login)
     TextView login;
@@ -75,21 +76,20 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         log = getIntent().getStringExtra("login");
         if (log == null) {
-            String link = (getIntent().getData()).toString();
+            link = (getIntent().getData()).toString();
             String[] separated = link.split("/");
             log = separated[3];
             if (separated.length > 4)
                 finish();
         }
-        login.setText(log);
 
         GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
         Call<UserDetails> call = gitHubService.getUserDetails(log);
         call.enqueue(new Callback<UserDetails>() {
             @Override
             public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
-                if (response.isSuccessful()) {
-                    //ok
+                if (response.isSuccessful()) { //ok
+                    login.setText(log);
                     userDetails = response.body();
                     Picasso.with(UserDetailsActivity.this).load(userDetails.getAvatar_url()).into(avatar);
                     followers.setText(getResources().getString(R.string.followers) + " " + userDetails.getFollowers());
@@ -115,15 +115,15 @@ public class UserDetailsActivity extends AppCompatActivity {
                         company.setText(getResources().getString(R.string.company) + " " + userDetails.getCompany());
                     }
                     repositories.setText(getResources().getString(R.string.repositories) + " " + userDetails.getPublic_repos());
-                } else {
-                    //bad request
+                } else { //bad request
+                    finish();
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
                 }
                 progressBar.setVisibility(ProgressBar.GONE);
             }
 
             @Override
-            public void onFailure(Call<UserDetails> call, Throwable t) {
-                //no network
+            public void onFailure(Call<UserDetails> call, Throwable t) { //no network
                 progressBar.setVisibility(ProgressBar.GONE);
             }
         });
@@ -136,7 +136,6 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.avatar)
     public void onAvatarClick(View view) {
-        //startActivity(new Intent(this, FullScreenActivity.class));
         Intent intent = new Intent(this, FullScreenActivity.class);
         intent.putExtra("image", userDetails.getAvatar_url());
         startActivity(intent);
